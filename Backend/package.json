@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "dev": "npm i && nodemon app"
+    "build": "npm i",
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +22,7 @@
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.9.5",
     "nodemailer-sendgrid-transport": "^0.2.0",
-    "spotify-web-api-node": "^5.0.2"
+    "spotify-web-api-node": "^5.0.2",
+    "nodemon": "^2.0.14"
   }
 }
