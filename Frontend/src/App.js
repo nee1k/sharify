@@ -7,7 +7,6 @@ import Home from "./components/screens/Home/Home";
 import Login from "./components/screens/Signin/Signin";
 import Signup from "./components/screens/Signup/Signup";
 import Profile from "./components/screens/Profile/Profile";
-import Chat from "./components/screens/Chat/Chat";
 import SecurityQuestion from "./components/screens/SecurityQuestion/SecurityQuestion";
 import NewPassword from "./components/screens/NewPassword/NewPassword";
 import { reducer, initialState } from "./reducers/userReducer";
@@ -16,6 +15,7 @@ import AuthRoute from "./components/routes/AuthRoute";
 import CreatePost from "./components/screens/CreatePost/CreatePost";
 import EditProfile from "./components/screens/EditProfile/EditProfile";
 import UserProfile from "./components/screens/UserProfile.js/UserProfile";
+import ChatPage from "./components/screens/ChatPage/ChatPage";
 
 export const UserContext = createContext();
 
@@ -73,15 +73,6 @@ const Routing = () => {
         }
       />
       <Route
-        exact
-        path="/chat"
-        element={
-          <PrivateRoute>
-            <Chat />
-          </PrivateRoute>
-        }
-      />
-      <Route
         path="/securityquestion"
         element={
           <AuthRoute>
@@ -118,6 +109,14 @@ const Routing = () => {
         element={
           <PrivateRoute>
             <UserProfile />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/chat"
+        element={
+          <PrivateRoute>
+            <ChatPage />
           </PrivateRoute>
         }
       />

@@ -16,13 +16,17 @@ router.post("/createpost", requireLogin, (req, res) => {
   if (!caption) {
     return res.status(422).json({ error: "Please add the Caption" });
   }
+  console.log(spotifyLink);
   req.user.password = undefined;
   req.user.securityQuestion = undefined;
   req.user.securityAnswer = undefined;
+  console.log(req.user)
   const spotifyId = spotifyLink.substring(
     spotifyLink.lastIndexOf("/") + 1,
     spotifyLink.lastIndexOf("?")
   );
+
+  
 
   const spotifyApi = new spotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,
@@ -50,7 +54,9 @@ router.post("/createpost", requireLogin, (req, res) => {
             albumName: data?.body?.album?.name,
             albumCoverUrl: data?.body?.album?.images[0]?.url,
             caption: caption,
+            spotifyUrl: spotifyLink,
             postedBy: req.user,
+            isPublic:req.user.isPublic
           });
           post
             .save()
@@ -74,7 +80,7 @@ router.post("/createpost", requireLogin, (req, res) => {
 router.get("/followposts", requireLogin, (req, res) => {
   users = req.user.following;
   users.push(req.user._id);
-  Post.find({ postedBy: users })
+  Post.find({ $or:[{postedBy:users},{isPublic:true}] })
     .sort({ createdAt: -1 })
     .populate("postedBy", "_id name profilePictureUrl")
     .populate("comments.postedBy", "_id name")
@@ -86,7 +92,10 @@ router.get("/followposts", requireLogin, (req, res) => {
     });
 });
 
-router.get("/allposts", requireLogin, (req, res) => {
+router.get("/allposts", 
+
+// requireLogin,
+ (req, res) => {
   Post.find()
     .sort({ createdAt: -1 })
     .populate("postedBy", "_id name profilePictureUrl")

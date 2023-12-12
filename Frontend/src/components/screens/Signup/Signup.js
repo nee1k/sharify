@@ -12,21 +12,18 @@ const Signup = () => {
   const [confirmPassowrd, setConfirmPassword] = useState("");
   const [securityQuestion, setSecurityQuestion] = useState("");
   const [securityAnswer, setSecurityAnswer] = useState("");
-  const [accountType, setAccountType] = useState("private");
-  const [isPrivate, setIsPrivate] = useState(true);
-
-  const handleToggleSwitch = () => {
-    setIsPrivate(!isPrivate);
-  };
+  const [accountType, setAccountType] = useState("public");
 
   const postData = () => {
     if (
       !name ||
       !email ||
       !password ||
+      !location ||
       !confirmPassowrd ||
       !securityQuestion ||
-      !securityAnswer
+      !securityAnswer ||
+      !accountType
     ) {
       M.toast({
         html: "Please fill all the fields",
@@ -50,8 +47,10 @@ const Signup = () => {
         name,
         email,
         password,
+        location,
         securityQuestion,
         securityAnswer,
+        accountType
       }),
     })
       .then((res) => res.json())
@@ -109,24 +108,33 @@ const Signup = () => {
           value={confirmPassowrd}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-
         <div className="input-field col s12">
-          <div className="label">Account Type</div>
-          <select
-            class="browser-default"
-            onChange={(e) => setAccountType(e.target.value)}
-          >
-            <option value="" disabled selected>
-              Choose your option
-            </option>
-            <option value="Private">
-              Private
-            </option>
-            <option value="Public">
-              Public
-            </option>
-          </select>
-        </div>
+        <p>
+          <label>
+            <input
+              name="accountType"
+              type="radio"
+              value="public"
+              checked={accountType === "public"}
+              onChange={() => setAccountType("public")}
+            />
+            <span>Public</span>
+          </label>
+        </p>
+        <p>
+          <label>
+            <input
+              name="accountType"
+              type="radio"
+              value="private"
+              checked={accountType === "private"}
+              onChange={() => setAccountType("private")}
+            />
+            <span>Private</span>
+          </label>
+        </p>
+      </div>
+
 
         <div className="input-field col s12">
           <div className="label">Security Question</div>
@@ -154,22 +162,6 @@ const Signup = () => {
           value={securityAnswer}
           onChange={(e) => setSecurityAnswer(e.target.value)}
         />
-        
-        {/* <div className="input-field col s12">
-            <div className="label">Account Type</div>
-            <label className="switch">
-              <input
-                type="checkbox"
-                onChange={handleToggleSwitch}
-                checked={isPrivate}
-              />
-              <span className="slider round"></span>
-            </label>
-            <span className="account-type-label">
-              {isPrivate ? "Private" : "Public"} Account
-            </span>
-          </div> */}
-
         <button className="signInButton" onClick={() => postData()}>
           Sign up
         </button>

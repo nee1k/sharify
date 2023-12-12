@@ -22,6 +22,15 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    fundraiser: {
+      type: Boolean,
+      default: false,
+    },
+    spotifyUrl: {
+      type: String,
+      required: true,
+      default: "https://open.spotify.com",
+    },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -41,10 +50,14 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    isPublic:{
+      type:Boolean,
+      default:false
+    }
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = mongoose.model("Post", postSchema);

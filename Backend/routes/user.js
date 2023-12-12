@@ -13,7 +13,7 @@ router.get("/get-user", requireLogin, (req, res) => {
   User.findById(req.user._id)
     .select("-resetToken -expireToken")
     .then((user) => {
-      return res.json({ user, isCurrentUser: true });
+      return res.json({ user });
     })
     .catch((err) => {
       return res.status(422).json({ error: err });
@@ -68,39 +68,54 @@ router.post("/edit-profile", requireLogin, (req, res) => {
     });
 });
 
-router.get("/user/:id", requireLogin, async (req, res) => {
-  try {
-    const user = await User.findOne({ _id: req.params.id }).select("-password");
-    const isCurrentUser = req.user._id.toString() === user._id.toString();
-    const isFollowing = req.user.following.includes(user._id);
-
-    let posts = [];
-
-    // If the account is private and the current user is not following, hide posts
-    if (user.hidePosts && !isFollowing && !isCurrentUser) {
-      return res.json({
-        user: { _id: user._id, name: user.name },
-        posts: [],
-        isCurrentUser,
-        isFollowing,
-      });
-    }
-
-    if (!user.hidePosts || isFollowing || isCurrentUser) {
-      posts = await Post.find({ postedBy: req.params.id })
-        .populate("postedBy", "_id name");
-    }
-
-    res.json({ user, posts, isCurrentUser, isFollowing });
-  } catch (err) {
-    res.status(500).json({ error: "Internal server error" });
-  }
+router.get("/user/:id", requireLogin, (req, res) => {
+  User.findOne({ _id: req.params.id })
+    .select("-password")
+    .then((user) => {
+      Post.find({ postedBy: req.params.id })
+        .populate("postedBy", "_id name")
+        .then((posts) => {
+          res.json({ user, posts });
+        })
+        .catch((err) => {
+          res.status(422).json({ error: err });
+        });
+    })
+    .catch((err) => {
+      return res.status(404).json({ error: "User not found" });
+    });
 });
 
 router.post("/search-users", (req, res) => {
   const userPattern = new RegExp(req.body.query, "i"); // 'i' for case-insensitive
   User.find({ email: { $regex: userPattern } })
     .select("_id email name") // Include any other fields you want
+    .then((users) => {
+      res.json({ users });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
+
+router.post("/search-users-by-name", (req, res) => {
+  const userPattern = new RegExp(req.body.query, "i"); // 'i' for case-insensitive
+  User.find({ name: { $regex: userPattern } })
+    .select("_id name") // Include any other fields you want
+    .then((users) => {
+      res.json({ users });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
+
+router.post("/search-users-by-location", (req, res) => {
+  const locationPattern = new RegExp(req.body.query, "i");
+  User.find({ location: { $regex: locationPattern } })
+    .select("_id name")
     .then((users) => {
       res.json({ users });
     })
@@ -189,7 +204,7 @@ router.get("/recommended-users", requireLogin, async (req, res) => {
 
     const recommendedFollowers = [];
     followingOfFollowing.forEach((id) => {
-      if (!following.includes(id)) {
+      if (!following.includes(id) && !id.equals(req.user._id)) {
         recommendedFollowers.push(id);
       }
     });
@@ -221,64 +236,27 @@ router.get("/recommended-users", requireLogin, async (req, res) => {
   }
 });
 
-router.post("/edit-profile", requireLogin, (req, res) => {
-  const {
-    name,
-    email,
-    password,
-    profilePictureUrl,
-    hideEmail,
-    accountType, // Add accountType to the destructuring
-  } = req.body;
-
-  User.findById(req.user._id)
-    .then((savedUser) => {
-      if (!savedUser) {
-        return res.status(422).json({ error: "User does not exist" });
+router.get("/search", requireLogin, (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
       }
+    : {};
 
-      if (name) savedUser.name = name;
-      if (email) savedUser.email = email;
-      if (profilePictureUrl) savedUser.profilePictureUrl = profilePictureUrl;
-      if (hideEmail) savedUser.hideEmail = hideEmail === "true";
-      if (password) {
-        bcrypt.hash(password, 12).then((hashedPassword) => {
-          savedUser.password = hashedPassword;
-        });
-      }
-      if (accountType) savedUser.accountType = accountType; // Update the accountType
-
-      savedUser.save().then((user) => {
-        var {
-          _id,
-          name,
-          email,
-          profilePictureUrl,
-          following,
-          followers,
-          hideEmail,
-          accountType, // Include accountType in the response
-        } = user;
-
-        hideEmail = hideEmail.toString();
-
-        return res.json({
-          message: "Profile updated successfully",
-          user: {
-            _id,
-            name,
-            email,
-            profilePictureUrl,
-            following,
-            followers,
-            hideEmail,
-            accountType, // Include accountType in the response
-          },
-        });
-      });
+  User.find({ ...keyword })
+    .find({ _id: { $ne: req.user._id } })
+    .select(
+      "-password -resetToken -expireToken -securityQuestion -securityAnswer -createdAt -updatedAt -__v"
+    )
+    .then((users) => {
+      res.json({ users });
     })
     .catch((err) => {
-      return res.status(422).json({ error: err });
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error" });
     });
 });
 

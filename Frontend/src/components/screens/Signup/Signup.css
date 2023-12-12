@@ -4,14 +4,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 110vh;
   background: rgb(11, 14, 48);
-  background: linear-gradient(
-    143deg,
-    rgba(11, 14, 48, 1) 30%,
-    rgba(0, 138, 215, 1) 63%
-  );
-  background-position: center;
+  background: linear-gradient(143deg, rgba(11, 14, 48, 1) 30%, rgba(0, 138, 215, 1) 63%);
+  background-position: center; /* Center the image within the container */
   background-repeat: no-repeat;
 }
 
@@ -38,39 +34,26 @@
   font-size: 36px;
 }
 
-.card.auth-card.input-field input,
-.card.auth-card.input-field select,
-.card.auth-card.input-field .security-answer-input {
-  width: 70%;
-  padding: 8px;
+.card.auth-card.input-field input {
+  width: 80%;
+  padding: 5px 10px 5px 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
-  background-color: #fff;
-  color: #000;
+  background-color: #fff; /* White background */
+  color: #000; /* Black text */
 }
 
-.card.auth-card.input-field select,
-.card.auth-card.input-field .label {
-  text-align: center;
-  font-size: 22px;
-}
-
-.card.auth-card.input-field .signInButton {
-  background: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 5px;
+.card.auth-card.input-field select {
+  width: 100%;
   padding: 10px;
-  cursor: pointer;
-}
-
-.card.auth-card.input-field .endText {
-  margin-top: 10px;
-  text-decoration: underline;
-  color: #1976d2;
-  cursor: pointer;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff; /* White background */
+  color: #000; /* Black text */
 }
 
 .signInButton {
@@ -122,65 +105,4 @@
   font-size: 14px; /* Smaller font size */
   background-color: #fff;
   color: #000;
-}
-
-.card.auth-card.input-field .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-.card.auth-card.input-field .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.card.auth-card.input-field .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 34px;
-}
-
-.card.auth-card.input-field .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-.card.auth-card.input-field input:checked + .slider {
-  background-color: #2196f3;
-}
-
-.card.auth-card.input-field input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-.card.auth-card.input-field .slider.round {
-  border-radius: 34px;
-}
-
-.card.auth-card.input-field .slider.round:before {
-  border-radius: 50%;
-}
-
-.account-type-label {
-  margin: 15px;
 }

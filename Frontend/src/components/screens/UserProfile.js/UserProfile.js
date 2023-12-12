@@ -30,24 +30,31 @@ const UserProfile = () => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
+
       body: JSON.stringify({
         followId: userid,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
+        // dispatch({
+        //   type: "UPDATE",
+        //   payload: { following: data.following, followers: data.followers },
+        // });
         localStorage.setItem("user", JSON.stringify(data));
-        setProfile((prevState) => ({
-          ...prevState,
-          user: {
-            ...prevState.user,
-            followers: [...prevState.user.followers, data._id],
-          },
-        }));
-      })
-      .catch((error) => console.error("Error following user:", error));
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: [...prevState.user.followers, data._id],
+            },
+          };
+        });
+      });
   };
-  
+
   const unfollowUser = () => {
     fetch(`${SERVER_URL}/unfollow`, {
       method: "put",
@@ -55,93 +62,33 @@ const UserProfile = () => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
+
       body: JSON.stringify({
         followId: userid,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
+        // dispatch({
+        //   type: "UPDATE",
+        //   payload: { following: data.following, followers: data.followers },
+        // });
         localStorage.setItem("user", JSON.stringify(data));
-        setProfile((prevState) => ({
-          ...prevState,
-          user: {
-            ...prevState.user,
-            followers: prevState.user.followers.filter(
-              (item) => item !== data._id
-            ),
-          },
-        }));
-      })
-      .catch((error) => console.error("Error unfollowing user:", error));
+        setProfile((prevState) => {
+          const newFollower = prevState.user.followers.filter(
+            (item) => item != data._id
+          );
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: newFollower,
+            },
+          };
+        });
+      });
   };
-
-  
-  // const followUser = () => {
-  //   fetch(`${SERVER_URL}/follow`, {
-  //     method: "put",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + localStorage.getItem("jwt"),
-  //     },
-
-  //     body: JSON.stringify({
-  //       followId: userid,
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       // dispatch({
-  //       //   type: "UPDATE",
-  //       //   payload: { following: data.following, followers: data.followers },
-  //       // });
-  //       localStorage.setItem("user", JSON.stringify(data));
-  //       setProfile((prevState) => {
-  //         return {
-  //           ...prevState,
-  //           user: {
-  //             ...prevState.user,
-  //             followers: [...prevState.user.followers, data._id],
-  //           },
-  //         };
-  //       });
-  //     });
-  // };
-
-  // const unfollowUser = () => {
-  //   fetch(`${SERVER_URL}/unfollow`, {
-  //     method: "put",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + localStorage.getItem("jwt"),
-  //     },
-
-  //     body: JSON.stringify({
-  //       followId: userid,
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       // dispatch({
-  //       //   type: "UPDATE",
-  //       //   payload: { following: data.following, followers: data.followers },
-  //       // });
-  //       localStorage.setItem("user", JSON.stringify(data));
-  //       setProfile((prevState) => {
-  //         const newFollower = prevState.user.followers.filter(
-  //           (item) => item != data._id
-  //         );
-  //         return {
-  //           ...prevState,
-  //           user: {
-  //             ...prevState.user,
-  //             followers: newFollower,
-  //           },
-  //         };
-  //       });
-  //     });
-  // };
 
   return (
     <>
@@ -183,12 +130,11 @@ const UserProfile = () => {
                   <h5>{userProfile.user.name}</h5>
                   {/* <h5>{state?state.email:"loading"}</h5>
                    */}
-                  {/* <h6>
-                    {JSON.parse(localStorage.getItem("user")).hideEmail ===
-                    "true"
+                  <h6>
+                    {userProfile.user.hideEmail === "true"
                       ? ""
-                      : JSON.parse(localStorage.getItem("user")).email}
-                  </h6> */}
+                      : userProfile.user.email}
+                  </h6>
                   <div
                     style={{
                       display: "flex",
@@ -197,10 +143,12 @@ const UserProfile = () => {
                     }}
                   >
                     <h6>{userProfile.posts.length} Posts</h6>
-                    <h6>{userProfile.user.followers ? userProfile.user.followers.length : 0} Followers</h6>
-                    <h6>{userProfile.user.following ? userProfile.user.following.length : 0} Following</h6>
+                    <h6>{userProfile.user.followers.length} Followers</h6>
+                    <h6>{userProfile.user.following.length} Following</h6>
                   </div>
-                  {userProfile.user.followers.includes(
+                </div>
+              </div>
+              {userProfile.user.followers.includes(
                 JSON.parse(localStorage.getItem("user"))._id
               ) ? (
                 <button
@@ -217,36 +165,26 @@ const UserProfile = () => {
                   Follow
                 </button>
               )}
-                </div>
-              </div>
             </div>
 
             <div className="gallery">
-            {userProfile.user.accountType === 'Private' ? (
-              userProfile.user.followers.includes(state._id) ? (
-                userProfile.posts.map((item) => (
-                  <img
-                    key={item._id}
-                    className="item"
-                    src={item.albumCoverUrl}
-                    alt={item.songName}
-                  />
-                ))
+              {userProfile.user.followers.includes(
+                JSON.parse(localStorage.getItem("user"))._id
+              ) ? (
+                userProfile.posts.map((item) => {
+                  return (
+                    <img
+                      key={item._id}
+                      className="item"
+                      src={item.albumCoverUrl}
+                      alt={item.songName}
+                    />
+                  );
+                })
               ) : (
-                <p className="follow-text">Private account. Follow to see posts.</p>
-              )
-            ) : (
-              userProfile.posts.map((item) => (
-                <img
-                  key={item._id}
-                  className="item"
-                  src={item.albumCoverUrl}
-                  alt={item.songName}
-                />
-              ))
-            )}
-          </div>
-
+                <p className="follow-text">Follow to see posts</p>
+              )}
+            </div>
           </div>
         </div>
       ) : (

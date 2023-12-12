@@ -26,6 +26,7 @@ const Home = () => {
     })
       .then((res) => res.json())
       .then((result) => {
+        console.log("test")
         console.log(result);
         setData(result.posts);
       });
@@ -327,11 +328,13 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
-                <img
-                  className="post-album-art"
-                  src={item.albumCoverUrl}
-                  alt="User 1"
-                />
+                <a href={item.spotifyUrl} target="_blank">
+                  <img
+                    className="post-album-art"
+                    src={item.albumCoverUrl}
+                    alt="User 1"
+                  />
+                </a>
                 <p className="post-caption">{item.caption}</p>
                 <div className="post-actions">
                   {/* // toggle unlike and like */}

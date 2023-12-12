@@ -4,120 +4,152 @@ import "./Profile.css";
 import SERVER_URL from "../../constants/constants";
 
 const Profile = () => {
-  const [user, setUser] = useState({});
-  const [followButtonVisible, setFollowButtonVisible] = useState(false);
-  const { state } = useContext(UserContext);
+  const [mypics, setPics] = useState([]);
+  const { state, dispatch } = useContext(UserContext);
+  const [image, setImage] = useState("");
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await fetch(`${SERVER_URL}/user/:id`, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("jwt"),
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch user profile");
-        }
-
-        const result = await response.json();
-        setUser(result.user);
-        setFollowButtonVisible(result.isCurrentUser || !result.isFollowing);
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
-
-    fetchUserProfile();
-  }, []);
-
-  const handleFollow = () => {
-    fetch(`${SERVER_URL}/follow`, {
-      method: "put",
+    console.log(localStorage.getItem("jwt"));
+    fetch(`${SERVER_URL}/myposts`, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
-      body: JSON.stringify({
-        followId: user._id,
-      }),
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log("Follow request sent successfully:", result);
-        // Update state or UI as needed
-      })
-      .catch((error) => {
-        console.error("Error sending follow request:", error);
+        console.log(result);
+        setPics(result.myposts);
       });
+  }, []);
+
+  //   useEffect(() => {
+  //     if (image) {
+  //       const data = new FormData();
+  //       data.append("file", image);
+  //       data.append("upload_preset", "insta-clone");
+  //       data.append("cloud_name", "cnq");
+  //       fetch("https://api.cloudinary.com/v1_1/cnq/image/upload", {
+  //         method: "post",
+  //         body: data,
+  //       })
+  //         .then((res) => res.json())
+  //         .then((data) => {
+  //           fetch("/updatepic", {
+  //             method: "put",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //               Authorization: "Bearer " + localStorage.getItem("jwt"),
+  //             },
+  //             body: JSON.stringify({
+  //               pic: data.url,
+  //             }),
+  //           })
+  //             .then((res) => res.json())
+  //             .then((result) => {
+  //               console.log(result);
+  //               localStorage.setItem(
+  //                 "user",
+  //                 JSON.stringify({ ...state, pic: result.pic })
+  //               );
+  //               dispatch({ type: "UPDATEPIC", payload: result.pic });
+  //               //window.location.reload()
+  //             });
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
+  //     }
+  //   }, [image]);
+  const updatePhoto = (file) => {
+    setImage(file);
   };
 
   return (
     <div className="container">
-      <div
-        style={{
-          margin: "18px 0px",
-          borderBottom: "2px solid lightgrey",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div style={{ maxWidth: "550px", margin: "0px auto" }}>
         <div
           style={{
+            margin: "18px 0px",
+            borderBottom: "2px solid lightgrey",
             display: "flex",
-            justifyContent: "space-around",
+            flexDirection: "column",
           }}
         >
-          <div>
-            <img
-              style={{
-                width: "140px",
-                height: "140px",
-                borderRadius: "80px",
-              }}
-              src={
-                user.profilePictureUrl ||
-                "https://cdn-icons-png.flaticon.com/512/21/21104.png"
-              }
-              alt="profile"
-            />
-          </div>
-          <div className="user-details">
-            <h5>{user.name}</h5>
-            <h6>
-              {user.hideEmail === "true" ? "" : user.email}
-            </h6>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "108%",
-              }}
-            >
-              <h6>{user.followers && user.followers.length ? `${user.followers.length} Followers` : '0 Followers'}</h6>
-              <h6>{user.following && user.following.length ? `${user.following.length} Following` : '0 Following'}</h6>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <div>
+              <img
+                style={{
+                  width: "140px",
+                  height: "140px",
+                  borderRadius: "80px",
+                }}
+                //    src={state?state.pic:"loading"}
+                src={
+                  JSON.parse(localStorage.getItem("user")).profilePictureUrl
+                    ? JSON.parse(localStorage.getItem("user")).profilePictureUrl
+                    : "https://cdn-icons-png.flaticon.com/512/21/21104.png"
+                }
+              />
+            </div>
+            <div className="user-details">
+              {/* <h4>{state?state.name:"loading"}</h4>
+               */}
+              <h5>{JSON.parse(localStorage.getItem("user"))?.name}</h5>
+              {/* <h5>{state?state.email:"loading"}</h5>
+               */}
+              <h6>
+                {JSON.parse(localStorage.getItem("user")).hideEmail === "true"
+                  ? ""
+                  : JSON.parse(localStorage.getItem("user")).email}
+              </h6>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "108%",
+                }}
+              >
+                {/* <h6>{mypics.length} posts</h6>
+                       <h6>{state?state.followers.length:"0"} followers</h6>
+                       <h6>{state?state.following.length:"0"} following</h6> */}
+                <h6>{mypics?.length} Posts</h6>
+                <h6>
+                  {JSON.parse(localStorage.getItem("user"))?.followers.length}{" "}
+                  Followers
+                </h6>
+                <h6>
+                  {JSON.parse(localStorage.getItem("user"))?.following.length}{" "}
+                  Following
+                </h6>
+              </div>
             </div>
           </div>
-        </div>
-        {followButtonVisible && (
-          <button className="followButton" onClick={handleFollow}>
-            Follow
+          <button
+            className="editProfileButton"
+            onClick={() => {
+              window.location.href = "/editprofile";
+            }}
+          >
+            Edit Profile
           </button>
-        )}
-      </div>
+        </div>
 
-      <div style={{ maxWidth: "550px", margin: "0px auto" }}>
         <div className="gallery">
-          {user.posts &&
-            user.posts.map((item) => (
+          {mypics.map((item) => {
+            return (
               <img
                 key={item._id}
                 className="item"
                 src={item.albumCoverUrl}
                 alt={item.songName}
               />
-            ))}
+            );
+          })}
         </div>
       </div>
     </div>

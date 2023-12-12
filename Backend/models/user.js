@@ -30,6 +30,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  location: {
+    type: String,
+    required: true,
+  },
+  isPublic: {
+    type: Boolean,
+    required: true,
+  },
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   resetToken: String,

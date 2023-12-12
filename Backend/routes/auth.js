@@ -19,11 +19,12 @@ const transporter = nodemailer.createTransport(
 );
 
 router.post("/signup", (req, res) => {
-  const { name, email, password, securityQuestion, securityAnswer } = req.body;
+  const { name, email, password, securityQuestion, securityAnswer, location, accountType } = req.body;
 
   if (!name || !email || !password || !securityQuestion || !securityAnswer) {
     return res.status(422).json({ error: "Please add all the fields" });
   }
+  let isPublic = accountType=="public"?true:false
 
   User.findOne({ email: email })
     .then((savedUser) => {
@@ -38,6 +39,8 @@ router.post("/signup", (req, res) => {
             password: hashedPassword,
             securityQuestion,
             securityAnswer: hashedSecurityAnswer,
+            location:location,
+            isPublic:isPublic
           });
           user
             .save()
