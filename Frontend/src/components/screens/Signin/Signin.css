@@ -1,0 +1,83 @@
+/* Signin.css */
+
+.cardcss {
+  background-color: rgb(58, 74, 217);
+  border-radius: 8px;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+  width: 50%;
+  text-align: center;
+  padding: 20px;
+  margin: 10px;
+  /* bottom: 50px; */
+}
+
+.signInButton {
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.endText {
+  margin-top: 10px;
+  text-decoration: underline;
+  color: #1976d2;
+  cursor: pointer;
+}
+
+.card.auth-card.input-field {
+  /* Add your styles here */
+  padding: 20px;
+  margin: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Signup.css */
+
+.card.auth-card.input-field h3 {
+  /* Example styling for the heading inside the element */
+  color: #333;
+  font-size: 36px;
+  animation: slideFromLeft 2s ease forwards; /* Animation properties */
+  opacity: 0; /* Initially hide the element */
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50%); /* Slide from left */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0); /* Slide to the final position and stay */
+  }
+}
+
+/* Signup.css */
+
+.card.auth-card.input-field input {
+  width: 75%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff; /* Set the background color to white */
+  color: #000; /* Set the text color to black */
+  top: 30px;
+}
+
+.card.auth-card.input-field select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff; /* Set the background color to white */
+  color: #000; /* Set the text color to black */
+}

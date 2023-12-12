@@ -1,0 +1,231 @@
+/* Home.css */
+
+.home-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* margin: 20px; */
+  background-color: #38445c;
+  padding: 20px;
+  /* border-radius: 10px; */
+}
+
+.follow-button {
+  width: 8vw;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.user-profile {
+  flex: 0.5;
+  text-align: center;
+  padding: 20px 10px 20px 10px;
+  border-radius: 20px;
+  background-color: #1a1a1a;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  /* border: 1px solid #333; */
+  margin: 20px 20px 10px 10px;
+  /* margin-top: 10px; */
+  color: white;
+}
+.user-photo {
+  width: 20px;
+  border-radius: 50%;
+  /* margin-top: 10px; */
+  /* padding: 20%; */
+}
+
+.user-name {
+  font-size: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* .activity-status { */
+/* flex: 0.5; */
+/* text-align: center; */
+/* margin-top: 10px; */
+/* margin-left: -20px; */
+/* padding: 20px; */
+/* border-radius: 20px; */
+/* background-color: #1A1A1A; */
+/* color: #FFFFFF; */
+/* } */
+
+.post-feed {
+  flex: 2;
+  /* padding: 50px; */
+  /* background-color: #1A1A1A; */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.post {
+  width: 55vw;
+  /* border: 1px solid #333; */
+  margin: 20px 20px 20px 20px;
+  padding: 5px 20% 5% 20%;
+  background-color: #1a1a1a;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  border-radius: 20px;
+  color: #ffffff;
+}
+
+.new-post {
+  width: 60vw;
+  /* border: 1px solid #333; */
+  margin-bottom: 10px;
+  /* padding: 5% 20% 5% 20%; */
+  background-color: #ae1f1f;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  border-radius: 20px;
+  color: #ffffff;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.post-album-art {
+  width: 100%;
+  border-radius: 25px;
+}
+
+.post-user-photo {
+  width: auto;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 5px;
+  padding: 5px;
+}
+
+.post-user-name,
+.post-song-name {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.post-song-name {
+  margin-top: 10px;
+  font-size: 24px;
+  font-family: "Merienda", cursive;
+}
+
+.post-song-details {
+  display: flex;
+  justify-content: start;
+  font-size: 14px;
+  font-family: "Merienda", cursive;
+  color: grey;
+}
+
+.post-caption {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-family: "Merienda", cursive;
+}
+
+.activity-sidebar {
+  flex: 0.5;
+  padding: 10px 20px;
+
+  border-radius: 20px;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #ffffff;
+  margin: 20px 10px 20px 10px;
+}
+
+.activity-tile {
+  display: flex;
+  align-items: center;
+  margin: 20px 10px 20px 10px;
+  padding: 10px 10px;
+  background-color: #1a1a1a;
+  border-radius: 2px;
+}
+
+.activity-user-photo {
+  width: auto;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.activity-user-name {
+  font-size: 16px;
+}
+
+.activity-song {
+  font-size: 12px;
+}
+
+.posts {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.post-action {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 15px;
+  padding: 0;
+  color: #ffffff;
+  transition: color 0.3s;
+}
+
+.post-action i {
+  font-size: 24px;
+  margin-right: 5px;
+}
+
+.post-action:hover,
+.post-action:active {
+  color: #ff5252;
+  background-color: transparent;
+}
+.post-action:focus {
+  background-color: transparent;
+}
+.liked {
+  color: #ff5252;
+}
+
+.post-count {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.post-info {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.search-bar {
+  align-items: center;
+  width: 55vw;
+  /* border: 1px solid #333; */
+  margin: 20px 20px 20px 20px;
+  padding: 2% 2% 2% 2%;
+  background-color: #1a1a1a;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  border-radius: 20px;
+  color: #ffffff;
+}

@@ -1,0 +1,126 @@
+/* AboutPageLayout.css */
+
+/* Container for the entire layout */
+.layout-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: rgb(11, 14, 48);
+  background: linear-gradient(143deg, rgba(11, 14, 48, 1) 30%, rgba(0, 138, 215, 1) 63%);
+  background-size: cover;
+  /* Cover the entire container with the image */
+  background-position: center;
+  /* Center the image within the container */
+  background-repeat: no-repeat;
+}
+
+/* Left side (slideshow) */
+.slideshow {
+  flex: 0.5;
+  padding: 10px;
+  /* Add your slideshow styles here */
+  background-color: #164374;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 40px 80px 40px 80px;
+  width: 100px;
+  height: 400px;
+}
+
+/* Right side (AboutPage content) */
+.about-container {
+  flex: 1;
+  padding: 20px 10px 40px 20px;
+  background-color: #3a587f;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-color: #0a0a0a;
+  /* Add your AboutPage content styles here */
+}
+
+/* AboutPage content styles */
+.about-container h1 {
+  font-size: 32px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.about-container h2 {
+  font-size: 24px;
+  color: #ffffff;
+  margin-top: 20px;
+}
+
+.about-container p {
+  font-size: 18px;
+  color: #cecdcd;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.about-container strong {
+  font-weight: bold;
+  color: #bfcedd;
+}
+
+/* Add this to your CSS file */
+/* Add this CSS to style the images */
+.image-container img {
+  width: 100px; /* Adjust the desired width */
+  height: auto; /* Maintain aspect ratio */
+  margin: 10px 10px 5px 110px; /* Add spacing between images if needed */
+
+}
+
+.slideshow img {
+  width: 50%; /* Adjust the width as needed */
+  max-height: 50%; /* Adjust the max-height as needed */
+  border-radius: 40px;
+}
+
+/* Add this CSS rule to style the h3 element */
+/* Add this CSS rule to style the h3 element */
+.slideshow h3 {
+  font-size: 48px; /* Adjust the font size as needed */
+  color: white; /* Set the font color to white */
+  font-family: cursive; /* Specify your custom font here */
+  margin: 20px 10px 40px 20px; /* Add margin to control spacing */
+
+  /* Add animation for fading in */
+  animation: fadeIn 2s ease-in-out forwards; /* Use 'forwards' to make it stay in place */
+  opacity: 0; /* Start with zero opacity (hidden) */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; /* Hidden at the beginning */
+  }
+  100% {
+    opacity: 1; /* Fully visible at the end */
+  }
+}
+
+/* Add CSS styles for button-like links */
+.button-link {
+  display: inline-block;
+  padding: 10px 20px; /* Adjust padding to control the button size */
+  background-color: #c7ced6; /* Set the background color */
+  color: white; /* Set the font color to white */
+  text-decoration: none; /* Remove underlines */
+  border: 1px solid #007BFF; /* Add a border */
+  border-radius: 5px; /* Add rounded corners */
+  font-size: 18px; /* Adjust the font size */
+  margin: 10px; /* Add margin for spacing */
+  transition: background-color 0.3s ease; /* Add a smooth transition */
+}
+
+.button-link:hover {
+  background-color: #0056b3; /* Change background color on hover */
+  color: white; /* Set the font color to white on hover */
+}
+
+
+

@@ -1,0 +1,193 @@
+/* Signup.css */
+
+.mycard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 110vh;
+  background: rgb(11, 14, 48);
+  background: linear-gradient(
+    143deg,
+    rgba(11, 14, 48, 1) 30%,
+    rgba(0, 138, 215, 1) 63%
+  );
+  background-size: cover;
+  background-position: center; /* Center the image within the container */
+  background-repeat: no-repeat;
+}
+
+.cardcss {
+  background-color: rgb(206, 224, 232);
+  border-radius: 8px;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+  width: 50%;
+  text-align: center;
+  padding: 20px;
+  margin: 20px 10px 20px 10px;
+}
+
+.card.auth-card.input-field {
+  padding: 10px 4px 10px 4px;
+  margin: 15px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card.auth-card.input-field h3 {
+  color: #333;
+  font-size: 36px;
+}
+
+.card.auth-card.input-field input {
+  width: 80%;
+  padding: 0px 10px 0px 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff; /* White background */
+  color: #000; /* Black text */
+}
+
+.card.auth-card.input-field select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff; /* White background */
+  color: #000; /* Black text */
+}
+
+.pictureContainer {
+  display: flex;
+}
+
+.signInButton {
+  background: #1976d2 !important;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.imageUpload {
+  color: transparent;
+  border: none;
+}
+
+.editPicDiv {
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.endText {
+  margin-top: 10px;
+  text-decoration: underline;
+  color: #1976d2;
+  cursor: pointer;
+}
+
+/* security queston */
+
+/* Signup.css */
+
+/* Center-align the text within the label and the options in the select field */
+.card.auth-card.input-field .input-field.col.s12 select,
+.card.auth-card.input-field .input-field.col.s12 .label {
+  text-align: center;
+  font-size: 22px;
+}
+
+/* Style for the Security Question select field */
+.card.auth-card.input-field .input-field.col.s12 select {
+  width: 70%; /* Reduce the width to make the field smaller */
+  padding: 8px; /* Smaller padding */
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px; /* Smaller font size */
+  background-color: #fff;
+  color: #000;
+}
+
+/* Style for the Security Question Answer input field */
+.card.auth-card.input-field .security-answer-input {
+  width: 70%; /* Reduce the width to make the field smaller */
+  padding: 8px; /* Smaller padding */
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px; /* Smaller font size */
+  background-color: #fff;
+  color: #000;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
